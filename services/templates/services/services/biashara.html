@@ -1,0 +1,435 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Huduma ya Mkopo</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      background: #f8f9fa;
+    }
+     a {
+      color: #fdd835;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+
+     /* Navbar */
+    header {
+      background-color: #2e7d32;
+      color: #fdd835;
+      padding: 15px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.15);
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 1.8rem;
+      user-select: none;
+    }
+    .logo img {
+      height: 45px;
+      width: 45px;
+      border-radius: 8px;
+      object-fit: contain;
+      box-shadow: 0 2px 6px rgba(253, 216, 53, 0.7);
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      margin: 0;
+      padding: 0;
+    }
+    nav ul li a {
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 8px 14px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+      color: #ffff;
+    }
+    nav ul li a:hover,
+    nav ul li a.active {
+      background-color: #fdd835;
+      color: #2e7d32;
+      text-decoration: none;
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .hamburger div {
+      width: 28px;
+      height: 3px;
+      background: white;
+      border-radius: 3px;
+      transition: 0.3s;
+    }
+
+    @media (max-width: 768px) {
+      nav ul {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        background: rgba(46, 125, 50, 0.95);
+        width: 180px;
+        padding: 15px 0;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        user-select: none;
+      }
+      nav ul.show {
+        display: flex;
+      }
+      .hamburger {
+        display: flex;
+      }
+    }
+
+    /* Hero Image */
+   .hero {
+  position: relative;
+  height: 70vh;
+  /* background: url('home2.jpg') center/cover no-repeat;  <-- remove this */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 20px;
+  color: #fff;
+  background-size: cover;      /* make sure DB image covers section */
+  background-position: center; /* center image */
+  background-repeat: no-repeat;
+}
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+    .hero-content {
+     position: relative;
+    z-index: 1;
+    max-width: 800px;
+    background: rgba(40, 167, 69, 0.5); /* kijani yenye transparency zaidi */
+    padding: 20px 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 15px;
+      color: #fff;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Info Section */
+    .info-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 40px;
+    }
+    .info-card {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+    .info-card:hover {
+      transform: translateY(-5px);
+    }
+    .info-card i {
+      font-size: 40px;
+      color: #28a745;
+      margin-bottom: 15px;
+    }
+    .counter {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #333;
+    }
+    .label {
+      font-size: 1.1rem;
+      margin-top: 5px;
+      color: rgba(46, 125, 50, 0.95);
+    }
+
+      footer { 
+      background-color:#2E7D32; 
+      color:white; 
+      padding:60px 30px 20px; 
+      text-align:center; 
+      font-size:0.9rem; 
+      user-select:none; 
+    }
+    .footer-container { 
+      max-width:1100px; 
+      margin:0 auto; 
+      display:flex; 
+      flex-wrap:wrap; 
+      justify-content:space-around; 
+      gap:30px; 
+    }
+    .footer-section { 
+      flex:1 1 220px; 
+      min-width:220px; 
+    }
+    .footer-section h3 { 
+      font-weight:700; 
+      margin-bottom:18px; 
+      font-size:1.2rem; 
+      border-bottom:2px solid #FDD835; 
+      padding-bottom:6px; 
+      user-select:text; 
+    }
+    .footer-section p, 
+    .footer-section a { 
+      color:#E8F5E9; 
+      text-decoration:none; 
+      user-select:text; 
+      font-weight:500; 
+      display:block; 
+      margin-bottom:10px; 
+      transition: color 0.3s ease; 
+    }
+    .footer-section a:hover { 
+      color:#FDD835; 
+    }
+    .social-icons { 
+      display:flex; 
+      gap:15px; 
+      justify-content:center; 
+      margin-top:12px; 
+    }
+    .social-icons a { 
+      background:linear-gradient(135deg,#FDD835,#FFC107); 
+      color:#2E7D32; 
+      width:44px; 
+      height:44px; 
+      display:inline-flex; 
+      align-items:center; 
+      justify-content:center; 
+      border-radius:50%; 
+      font-size:1.5rem; 
+      font-weight:700; 
+      transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease; 
+      user-select:none; 
+      box-shadow:0 3px 8px rgba(253,216,53,0.6); 
+    }
+    .social-icons a:hover { 
+      background:#2E7D32; 
+      color:#FDD835; 
+      transform:scale(1.15); 
+      box-shadow:0 6px 15px rgba(46,125,50,0.7); 
+    }
+    .social-icons a svg { 
+      width: 24px; 
+      height: 24px; 
+      fill: currentColor; 
+    }
+    
+    .copyright {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      color: #E8F5E9;
+    }
+    @media(max-width: 768px) {
+      .hero h1 { font-size: 1.8rem; }
+      .hero p { font-size: 0.95rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <header>
+    <div class="logo" aria-label="Performance Finance logo">
+      <img src="logo.jpg" alt="Performance Finance Logo" />
+      Performance Finance
+    </div>
+    <nav>
+      <ul>
+         <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'about' %}">About</a></li>
+        <li><a href="{% url 'services:services' %}" class="active">Services</a></li>
+        <li><a href="{% url 'team' %}" tabindex="0">Our Team</a></li>
+        <li><a href="{% url 'contact' %}">Contact</a></li>
+      </ul>
+    </nav>
+     </nav>
+    <div class="hamburger" aria-label="Toggle navigation menu" role="button" tabindex="0" onclick="toggleMenu()" onkeypress="if(event.key==='Enter'){toggleMenu();}">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </header>
+
+
+  <!-- Hero Section -->
+
+{% load static %}
+
+<section class="hero">
+  {% if bsn %}
+    {% for item in bsn %}
+      <div class="hero-slide"
+           {% if item.icon %}
+             style="background-image: url('{{ item.icon.url }}');"
+           {% else %}
+             style="background-image: url('{% static "image/3.jpg" %}');"
+           {% endif %}>
+           
+        <div class="hero-content">
+          <h1>{{ item.title }}</h1>
+          <p>{{ item.description }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="hero-slide" style="background-image: url('{% static "image/3.jpg" %}');">
+      <div class="hero-content">
+        <h1>Hakuna taarifa kwa sasa</h1>
+        <p>Tafadhali ongeza huduma kwenye database.</p>
+      </div>
+    </div>
+  {% endif %}
+</section>
+
+
+
+
+
+  <!-- Info Section -->
+  <section class="info-container">
+    <div class="info-card">
+      <i class="fas fa-percentage"></i>
+      <div class="counter" data-target="3.5">0</div>
+      <div class="label">Riba kwa Mwezi (%)</div>
+    </div>
+
+    <div class="info-card">
+      <i class="fas fa-chart-line"></i>
+      <div class="counter" data-target="42">0</div>
+      <div class="label">Riba kwa Mwaka (%)</div>
+    </div>
+
+    <div class="info-card">
+      <i class="fas fa-file-invoice-TSHS"></i>
+      <div class="counter" data-target="15000">0</div>
+      <div class="label">Bei ya Fomu (TZS)</div>
+    </div>
+
+    <div class="info-card">
+      <i class="fas fa-cogs"></i>
+      <div class="counter" data-target="2">0</div>
+      <div class="label">Process Fee (%)</div>
+    </div>
+
+    <div class="info-card">
+      <i class="fas fa-heartbeat"></i>
+      <div class="counter" data-target="1">0</div>
+      <div class="label">Bima ya Maisha (%)</div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-section" aria-label="Contact information">
+      <h3>Contact Us</h3>
+      <p><i class="fas fa-phone"></i> +255 758 239 106</p>
+      <p><i class="fas fa-envelope"></i>per.finance2023@gmail.com</p>
+      <p><i class="fas fa-map-marker-alt"></i>Block T , Mbeya, Tanzania</p>
+    </div>
+
+    <div class="footer-section" aria-label="Quick links">
+      <h3>Quick Links</h3>
+     <a href="{% url 'home' %}">Home</a>
+      <a href="{% url 'about' %}">About Us</a>
+       <a href="{% url 'team' %}">Our team</a>
+      <a href="{% url 'contact' %}">Contact</a>
+    </div>
+
+    <div class="footer-section" aria-label="Follow us on social media">
+      <h3>Follow Us</h3>
+      <div class="social-icons">
+        <a href="#" aria-label="Facebook" title="Facebook" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.5 9.8v-6.9H8v-2.9h2.5V9.3c0-2.5 1.5-3.9 3.7-3.9 1.1 0 2.3.2 2.3.2v2.5h-1.2c-1.2 0-1.6.8-1.6 1.6v1.9h2.8l-.4 2.9h-2.4v6.9A10 10 0 0 0 22 12z"/></svg>
+        </a>
+        <a href="#" aria-label="Twitter" title="Twitter" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24"><path d="M22.46 6c-.77.34-1.6.57-2.46.67a4.3 4.3 0 0 0 1.88-2.37 8.48 8.48 0 0 1-2.7 1.03 4.25 4.25 0 0 0-7.23 3.87 12 12 0 0 1-8.7-4.41 4.25 4.25 0 0 0 1.32 5.67 4.23 4.23 0 0 1-1.93-.53v.05a4.25 4.25 0 0 0 3.41 4.17 4.3 4.3 0 0 1-1.92.07 4.25 4.25 0 0 0 3.96 2.95 8.5 8.5 0 0 1-5.26 1.82A12 12 0 0 0 12 21c7.82 0 12.1-6.48 12.1-12.1 0-.18 0-.36-.01-.54A8.6 8.6 0 0 0 22.46 6z"/></svg>
+        </a>
+        <a href="#" aria-label="Instagram" title="Instagram" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 2A3.75 3.75 0 0 0 4 7.75v8.5A3.75 3.75 0 0 0 7.75 20h8.5a3.75 3.75 0 0 0 3.75-3.75v-8.5A3.75 3.75 0 0 0 16.25 4h-8.5zM12 7a5 5 0 1 1 0 10a5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6a3 3 0 0 0 0-6zm4.75-3a1.25 1.25 0 1 1-2.5 0a1.25 1.25 0 0 1 2.5 0z"/></svg>
+        </a>
+        <a href="#" aria-label="LinkedIn" title="LinkedIn" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5a2.5 2.5 0 0 1 0-5zm.02 4.97H2V21h3v-12.53zM9 8.97h2.88v1.65h.04a3.17 3.17 0 0 1 2.84-1.56c3.04 0 3.6 2 3.6 4.59V21h-3v-6.41c0-1.53-.03-3.5-2.14-3.5-2.15 0-2.48 1.67-2.48 3.4V21H9v-12.03z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+   <div class="copyright">
+    <p>&copy; 2025 Performance Finance. All Rights Reserved.|
+    <a href="{% url 'policies:policies' %}">Privacy Policy & Terms Used</a></p>
+  </div>
+</footer>
+  <script>
+    
+    // Hamburger menu toggle
+    function toggleMenu() {
+      const navMenu = document.getElementById('nav-menu');
+      navMenu.classList.toggle('show');
+    }
+    // Counting animation
+    const counters = document.querySelectorAll('.counter');
+    counters.forEach(counter => {
+      const updateCount = () => {
+        const target = +counter.getAttribute('data-target');
+        const count = +counter.innerText;
+        const speed = 50;
+        const increment = target / 100;
+
+        if(count < target) {
+          counter.innerText = Math.ceil(count + increment);
+          setTimeout(updateCount, speed);
+        } else {
+          counter.innerText = target;
+        }
+      }
+      updateCount();
+    });
+  </script>
+
+</body>
+</html>

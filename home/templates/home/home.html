@@ -1,0 +1,687 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Performance Finance</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body { background: #fff; color: #222; line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; }
+    a { color: inherit; text-decoration: none; }
+
+    /* Navbar */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(46, 125, 50, 0.95);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      z-index: 10000;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.15);
+    }
+    .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.8rem; color: #FDD835; letter-spacing: 1px; user-select: none; }
+    .logo img { height: 40px; width: 40px; object-fit: contain; border-radius: 8px; box-shadow: 0 2px 6px rgba(253, 216, 53, 0.7); }
+    
+    nav ul { list-style: none; display: flex; gap: 25px; position: relative; }
+    nav ul li a { font-weight: 600; font-size: 1rem; color: white; padding: 8px 12px; border-radius: 6px; transition: background-color 0.3s ease, color 0.3s ease; }
+    nav ul li a:hover, nav ul li a:focus { background-color: #FDD835; color: #2E7D32; outline: none; }
+
+    /* Dropdown Menu - Hover Effect */
+    nav ul li.dropdown { position: relative; cursor: pointer; user-select: none; }
+    nav ul li.dropdown .arrow { margin-left: 5px; transition: transform 0.3s ease; display: inline-block; }
+    nav ul li.dropdown ul.dropdown-menu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: rgba(46,125,50,0.95);
+      flex-direction: column;
+      min-width: 200px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      z-index: 999;
+    }
+    nav ul li.dropdown .dropdown-menu li a { padding: 10px 15px; display: block; color: white; font-weight: 500; transition: background 0.3s, color 0.3s; }
+    nav ul li.dropdown .dropdown-menu li a:hover { background: #FDD835; color: #2E7D32; }
+
+    /* Hover to open dropdown */
+    nav ul li.dropdown:hover .dropdown-menu {
+      max-height: 500px; /* Dropdown inafunguka pale unapobeba mouse */
+    }
+    nav ul li.dropdown:hover .arrow {
+      transform: rotate(90deg); /* Arrow inageuka pale unapobeba mouse */
+    }
+
+    /* Hamburger */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger div { width: 28px; height: 3px; background: white; border-radius: 3px; transition: 0.3s; }
+
+    @media (max-width: 768px) {
+      nav ul { display: none; flex-direction: column; position: absolute; top: 60px; right: 20px; background: rgba(46, 125, 50, 0.95); width: 180px; padding: 15px 0; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); user-select: none; }
+      nav ul.show { display: flex; }
+      nav ul li .dropdown-menu { position: relative; top: 0; left: 0; box-shadow: none; border-radius: 0; }
+      .hamburger { display: flex; }
+    }
+
+    /* Hero Section */
+    .hero { height: 100vh; position: relative; overflow: hidden; margin-top: 60px; display: flex; align-items: center; justify-content: center; }
+    .slide { position: absolute; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transition: opacity 1.2s ease-in-out; filter: brightness(0.65); z-index: 0; }
+    .slide.active { opacity: 1; }
+    .hero-content { position: relative; z-index: 10; background: rgba(0,0,0,0.5); color: #FDD835; padding: 30px 40px; border-radius: 12px; max-width: 700px; text-align: center; animation: fadeInUp 1.5s ease forwards; }
+    .hero-content h1 { font-size: 3rem; margin-bottom: 15px; font-weight: 700; text-shadow: 1px 1px 6px rgba(0,0,0,0.7); }
+    .hero-content p { font-size: 1.3rem; margin-bottom: 25px; font-weight: 500; text-shadow: 1px 1px 4px rgba(0,0,0,0.6); }
+    .btn { background-color: #2E7D32; border: none; color: white; font-weight: 600; padding: 14px 28px; font-size: 1.1rem; border-radius: 6px; cursor: button; transition: background-color 0.4s ease, color 0.4s ease; box-shadow: 0 6px 10px rgba(46, 125, 50, 0.6); user-select: none; }
+    .btn:hover, .btn:focus { background-color: #FDD835; color: #2E7D32; outline: none; box-shadow: 0 8px 14px rgba(253, 216, 53, 0.7); }
+    @keyframes fadeInUp { 0% {opacity:0; transform:translateY(20px);} 100% {opacity:1; transform:translateY(0);} }
+
+    /* Horizontal summary + card layout */
+    .horizontal-section { display: flex; gap: 40px; max-width: 1200px; margin: 60px auto; padding: 0 20px; flex-wrap: wrap; justify-content: center; align-items: flex-start; }
+    .summary-container, .card-container { flex: 1 1 450px; }
+    .summary { display: flex; gap: 25px; background-color: #E8F5E9; padding: 30px; border-radius: 15px; box-shadow: 0 10px 20px rgba(46,125,50,0.2); align-items: center; flex-wrap: wrap;  }
+    .summary img { width: 55%; border-radius: 12px; object-fit: cover; box-shadow: 0 6px 14px rgba(46,125,50,0.3); }
+    .summary-text { width: 45%; color: #2E7D32; font-weight: 500; font-size: 1.1rem; }
+    .summary-text h2 { font-weight: 700; font-size: 2rem; margin-bottom: 12px; }
+    .attractive-card { padding: 20px; text-align: center; border-radius: 15px; box-shadow: 0 8px 20px rgba(46, 125, 50, 0.2); }
+   .attractive-card img { width: 100%; height: 280px; object-fit: cover; border-radius: 12px; margin-bottom: 18px; }
+    /* Activities Section */
+    .activities { display: flex; justify-content: center; gap: 40px; max-width: 1000px; margin: 0 auto 80px; padding: 0 20px; flex-wrap: wrap; }
+    .activity-box { background-color: #F1F8E9; border-radius: 15px; box-shadow: 0 6px 15px rgba(46,125,50,0.15); flex:1 1 400px; max-width:450px; padding:25px; text-align:center; transition: transform 0.3s ease; }
+    .activity-box:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(46,125,50,0.3); }
+    .activity-box img { width:100%; height:230px; object-fit:cover; border-radius:15px; margin-bottom:18px; box-shadow:0 4px 10px rgba(46,125,50,0.2); }
+    .activity-box h3 { font-weight:700; color:#2E7D32; margin-bottom:12px; font-size:1.5rem; }
+    .activity-box p { font-weight:500; color:#4A7C32; font-size:1rem; line-height:1.5; }
+
+    /* Testimonials Section */
+    .testimonials-section {
+      background-color: #E8F5E9;
+      padding: 80px 20px;
+      margin: 40px 0;
+    }
+    
+    .testimonials-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    
+    .testimonials-heading {
+      color: #2E7D32;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+    
+    .testimonials-subheading {
+      color: #4A7C32;
+      font-size: 1.2rem;
+      margin-bottom: 50px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+    
+    .testimonial-card {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 8px 20px rgba(46, 125, 50, 0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .testimonial-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(46, 125, 50, 0.25);
+    }
+    
+    .testimonial-image {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #2E7D32;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 10px rgba(46, 125, 50, 0.3);
+    }
+    
+    .testimonial-quote {
+      color: #2E7D32;
+      font-style: italic;
+      margin-bottom: 20px;
+      line-height: 1.6;
+      font-size: 1.05rem;
+    }
+    
+    .testimonial-author {
+      font-weight: 700;
+      color: #2E7D32;
+      margin-bottom: 5px;
+      font-size: 1.2rem;
+    }
+    
+    .testimonial-role {
+      color: #4A7C32;
+      font-size: 0.9rem;
+    }
+    
+    .testimonial-rating {
+      color: #FDD835;
+      font-size: 1.2rem;
+      margin-top: 15px;
+      letter-spacing: 3px;
+    }
+
+    /* Gallery Section Styles */
+    .gallery-section {
+      padding: 80px 20px;
+      background-color: #fff;
+    }
+    
+    .gallery-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    
+    .gallery-heading {
+      color: #2E7D32;
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+    
+    .gallery-subheading {
+      color: #4A7C32;
+      font-size: 1.2rem;
+      margin-bottom: 50px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .gallery-slider {
+      position: relative;
+      max-width: 1000px;
+      margin: 0 auto;
+      overflow: hidden;
+      border-radius: 15px;
+      box-shadow: 0 15px 30px rgba(46, 125, 50, 0.3);
+    }
+    
+    .gallery-slides {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+    
+    .gallery-slide {
+      min-width: 100%;
+      position: relative;
+    }
+    
+    .gallery-slide img {
+      width: 100%;
+      height: 500px;
+      object-fit: cover;
+      display: block;
+    }
+    
+    .gallery-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(46, 125, 50, 0.85);
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+    
+    .gallery-nav {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      z-index: 10;
+    }
+    
+    .gallery-nav button {
+      background: rgba(253, 216, 53, 0.8);
+      border: none;
+      color: #2E7D32;
+      font-size: 1.5rem;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .gallery-nav button:hover {
+      background: #FDD835;
+    }
+    
+    .gallery-dots {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      gap: 10px;
+    }
+    
+    .gallery-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #C8E6C9;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .gallery-dot.active {
+      background: #2E7D32;
+    }
+   
+    /* Footer */
+       footer { 
+      background-color:#2E7D32; 
+      color:white; 
+      padding:60px 30px 20px; 
+      text-align:center; 
+      font-size:0.9rem; 
+      user-select:none; 
+    }
+    .footer-container { 
+      max-width:1100px; 
+      margin:0 auto; 
+      display:flex; 
+      flex-wrap:wrap; 
+      justify-content:space-around; 
+      gap:30px; 
+    }
+    .footer-section { 
+      flex:1 1 220px; 
+      min-width:220px; 
+      display: flex;  
+      flex-direction: column;     
+      align-items: center;        
+      text-align: center; 
+    }
+    .footer-section h3 { 
+      font-weight:700; 
+      margin-bottom:18px; 
+      font-size:1.2rem; 
+      border-bottom:2px solid #FDD835; 
+      padding-bottom:6px; 
+      user-select:text; 
+    }
+    .footer-section p, 
+    .footer-section a { 
+      color:#E8F5E9; 
+      text-decoration:none; 
+      user-select:text; 
+      font-weight:500; 
+      display:block; 
+      margin-bottom:10px; 
+      transition: color 0.3s ease; 
+    }
+    .footer-section a:hover { 
+      color:#FDD835; 
+    }
+    .social-icons { 
+      display:flex; 
+      gap:15px; 
+      justify-content:center; 
+      margin-top:12px; 
+      margin-left: auto;
+      margin-right: auto;
+       max-width: max-content;
+    }
+    .social-icons a { 
+      background:linear-gradient(135deg,#FDD835,#FFC107); 
+      color:#2E7D32; 
+      width:44px; 
+      height:44px; 
+      display:inline-flex; 
+      align-items:center; 
+      justify-content:center; 
+      border-radius:50%; 
+      font-size:1.5rem; 
+      font-weight:700; 
+      transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease; 
+      user-select:none; 
+      box-shadow:0 3px 8px rgba(253,216,53,0.6); 
+    }
+    .social-icons a:hover { 
+      background:#2E7D32; 
+      color:#FDD835; 
+      transform:scale(1.15); 
+      box-shadow:0 6px 15px rgba(46,125,50,0.7); 
+    }
+    .social-icons a svg { 
+      width: 24px; 
+      height: 24px; 
+      fill: currentColor; 
+    }
+    
+    .copyright {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      color: #E8F5E9;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo" aria-label="Performance Finance logo">
+    <img src="{% static 'image/logo.jpg' %}" alt="Performance Finance Logo" />
+    Performance Finance
+  </div>
+ <nav>
+    <ul id="nav-menu">
+      <li><a href="{% url 'home' %}" tabindex="0">Home</a></li>
+      <li><a href="{% url 'about' %}" tabindex="0">About </a></li>
+      <li class="dropdown" tabindex="0">
+        <a href="services " tabindex="0">Services<span class="arrow">&#9654;</span></a>
+        <ul class="dropdown-menu">
+          <li><a href="{% url 'services:biashara' %}">Mkopo wa Biashara</a></li>
+          <li><a href="{% url 'services:vikundi' %}">Mkopo wa Vikundi</a></li>
+          <li><a href="{% url 'services:elimu' %}">Mkopo wa Elimu</a></li>
+          <li><a href="{% url 'services:kilimo' %}">Mkopo wa Kilimo</a></li>
+          <li><a href="{% url 'services:waajiriwa' %}">Mkopo wa Waajiriwa</a></li>
+          <li><a href="{% url 'services:nyumba' %}">Mkopo wa Maboresho ya Makazi</a></li>
+        </ul>
+      </li>
+      <li><a href="{% url 'team' %}" tabindex="0">Our Team</a></li>
+      <li><a href="{% url 'contact' %}" tabindex="0">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="hamburger" aria-label="Toggle navigation menu" role="button" tabindex="0" onclick="toggleMenu()" onkeypress="if(event.key==='Enter'){toggleMenu();}">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="slide active" style="background-image: url('{% static "image/5.jpg" %}');"></div>
+  <div class="slide" style= "background-image: url('{% static "image/home.jpg" %}');"></div>
+  <div class="slide" style="background-image: url('{% static "image/12.jpg" %}');"></div>
+
+  <div class="hero-content">
+    <h1>Empowering Your Financial Future</h1>
+    <p>Smart Solutions for Your Business and Life</p>
+    <button class="btn" onclick="location.href='{% url "services:services" %}'">Learn More</button>
+  </div>
+</section>
+
+
+<section class="horizontal-section" id="summary">
+  <div class="summary-container">
+    <div class="summary">
+      <img src="{% static 'image/ofisi.jpg' %}" alt="Office" class="summary-image" />
+      <div class="summary-text">
+        <h2>Welcome to Performance Finance</h2>
+        <p>
+          Performance Finance Limited is your trusted partner for innovative financial services designed to empower businesses and individuals alike.
+          Our dedicated team works tirelessly to provide tailored solutions, including investment planning, risk management, and financial consultancy.
+          With a commitment to integrity and excellence, we strive to help you achieve a secure and prosperous future.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-container">
+    <div class="attractive-card">
+      <img src="{% static 'image/edited.jpg' %}" alt="Team" />
+      <div class="card-content">
+        <h3>Meet Our Team</h3>
+        <p>Our expert team members are dedicated to providing personalized financial solutions that meet your unique needs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="activities">
+  <div class="activity-box">
+    <img src="{% static 'image/investment.jpg' %}" alt="Investment Planning" />
+    <h3>Investment Planning</h3>
+    <p>We help you create customized investment strategies to grow your wealth sustainably and securely.</p>
+  </div>
+  <div class="activity-box">
+    <img src="{% static 'image/financial.jpg' %}" alt="Financial Consultancy" />
+    <h3>Financial Consultancy</h3>
+    <p>Our experts provide professional advice tailored to your unique financial needs and goals.</p>
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="testimonials-section">
+  <div class="testimonials-container">
+    <h2 class="testimonials-heading">What Our Clients Say</h2>
+    <p class="testimonials-subheading">Hear from our satisfied clients who have experienced our exceptional financial services.</p>
+    
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <img src="https://placehold.co/100x100/2E7D32/FFFFFF/png?text=J" alt="John Mwamba" class="testimonial-image">
+        <p class="testimonial-quote">"Performance Finance helped me secure a business loan that transformed my small shop into a thriving supermarket. Their service was exceptional!"</p>
+        <h4 class="testimonial-author">John Mwamba</h4>
+        <p class="testimonial-role">Business Owner</p>
+        <div class="testimonial-rating">★★★★★</div>
+      </div>
+      
+      <div class="testimonial-card">
+        <img src="https://placehold.co/100x100/2E7D32/FFFFFF/png?text=A" alt="Aisha Juma" class="testimonial-image">
+        <p class="testimonial-quote">"The education loan I received allowed me to complete my university studies without financial stress. I'm forever grateful to Performance Finance."</p>
+        <h4 class="testimonial-author">Aisha Juma</h4>
+        <p class="testimonial-role">University Graduate</p>
+        <div class="testimonial-rating">★★★★★</div>
+      </div>
+      
+      <div class="testimonial-card">
+        <img src="https://placehold.co/100x100/2E7D32/FFFFFF/png?text=R" alt="Robert Kimambo" class="testimonial-image">
+        <p class="testimonial-quote">"As a farmer, the agricultural loan I received helped me modernize my farm and triple my production. Performance Finance understands local needs."</p>
+        <h4 class="testimonial-author">Robert Kimambo</h4>
+        <p class="testimonial-role">Agricultural Entrepreneur</p>
+        <div class="testimonial-rating">★★★★☆</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery Section -->
+<section class="gallery-section">
+  <div class="gallery-container">
+    <h2 class="gallery-heading">Our Gallery</h2>
+    <p class="gallery-subheading">Explore our work and success stories through our image gallery</p>
+    
+    <div class="gallery-slider">
+      <div class="gallery-slides">
+        {% for image in gallery_images %}
+        <div class="gallery-slide">
+          <img src="{{ image.image.url }}" alt="{{ image.title }}">
+          <div class="gallery-caption">{{ image.caption }}</div>
+        </div>
+        {% empty %}
+        <div class="gallery-slide">
+          <img src="{% static 'image/default-gallery.jpg' %}" alt="Default Image">
+          <div class="gallery-caption">No gallery images available</div>
+        </div>
+        {% endfor %}
+      </div>
+      
+      <div class="gallery-nav">
+        <button class="gallery-prev">&#10094;</button>
+        <button class="gallery-next">&#10095;</button>
+      </div>
+    </div>
+    
+    <div class="gallery-dots">
+      <!-- Dots will be added dynamically with JavaScript -->
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-section" aria-label="Contact information">
+      <h3>Contact Us</h3>
+      <p><i class="fas fa-phone"></i> +255 758 239 106</p>
+      <p><i class="fas fa-envelope"></i>per.finance2023@gmail.com</p>
+      <p><i class="fas fa-map-marker-alt"></i>Block T , Mbeya, Tanzania</p>
+    </div>
+
+    <div class="footer-section" aria-label="Quick links">
+      <h3>Quick Links</h3>
+      <a href="{% url 'home' %}">Home</a>
+      <a href="{% url 'about' %}">About Us</a>
+       <a href="{% url 'team' %}">Our team</a>
+      <a href="{% url 'contact' %}">Contact</a>
+    </div>
+
+    <div class="footer-section" aria-label="Follow us on social media">
+      <h3>Follow Us</h3>
+      <div class="social-icons">
+        <a href="#" aria-label="Facebook" title="Facebook" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.5 9.8v-6.9H8v-2.9h2.5V9.3c0-2.5 1.5-3.9 3.7-3.9 1.1 0 2.3.2 2.3.2v2.5h-1.2c-1.2 0-1.6.8-1.6 1.6v1.9h2.8l-.4 2.9h-2.4v6.9A10 10 0 0 0 22 12z"/></svg>
+        </a>
+        <a href="#" aria-label="Twitter" title="Twitter" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24"><path d="M22.46 6c-.77.34-1.6.57-2.46.67a4.3 4.3 0 0 0 1.88-2.37 8.48 8.48 0 0 1-2.7 1.03 4.25 4.25 0 0 0-7.23 3.87 12 12 0 0 1-8.7-4.41 4.25 4.25 0 0 0 1.32 5.67 4.23 4.23 0 0 1-1.93-.53v.05a4.25 4.25 0 0 0 3.41 4.17 4.3 4.3 0 0 1-1.92.07 4.25 4.25 0 0 0 3.96 2.95 8.5 8.5 0 0 1-5.26 1.82A12 12 0 0 0 12 21c7.82 0 12.1-6.48 12.1-12.1 0-.18 0-.36-.01-.54A8.6 8.6 0 0 0 22.46 6z"/></svg>
+        </a>
+        <a href="#" aria-label="Instagram" title="Instagram" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 2A3.75 3.75 0 0 0 4 7.75v8.5A3.75 3.75 0 0 0 7.75 20h8.5a3.75 3.75 0 0 0 3.75-3.75v-8.5A3.75 3.75 0 0 0 16.25 4h-8.5zM12 7a5 5 0 1 1 0 10a5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6a3 3 0 0 0 0-6zm4.75-3a1.25 1.25 0 1 1-2.5 0a1.25 1.25 0 0 1 2.5 0z"/></svg>
+        </a>
+        <a href="#" aria-label="LinkedIn" title="LinkedIn" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5a2.5 2.5 0 0 1 0-5zm.02 4.97H2V21h3v-12.53zM9 8.97h2.88v1.65h.04a3.17 3.17 0 0 1 2.84-1.56c3.04 0 3.6 2 3.6 4.59V21h-3v-6.41c0-1.53-.03-3.5-2.14-3.5-2.15 0-2.48 1.67-2.48 3.4V21H9v-12.03z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+   <div class="copyright">
+    <p>&copy;  2025 Performance Finance. All Rights Reserved.|
+     <a href="{% url 'policies:policies' %}">
+      <br>
+      Privacy Policy & Terms Used</a>
+    <br>@created by RandomGuys<br></p>
+  </div>
+</footer>
+
+
+
+<script>
+  // Toggle mobile menu
+  function toggleMenu() {
+    const navUl = document.querySelector('nav ul');
+    navUl.classList.toggle('show');
+  }
+
+  // Hero Slideshow
+  const slides = document.querySelectorAll('.slide');
+  let currentSlide = 0;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => slide.classList.toggle('active', i === index));
+  }
+
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    showSlide(currentSlide);
+  }
+
+  setInterval(nextSlide, 4000); // Slide every 4 seconds
+
+  // Gallery Slideshow Functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const gallerySlides = document.querySelector('.gallery-slides');
+    const slides = document.querySelectorAll('.gallery-slide');
+    const prevBtn = document.querySelector('.gallery-prev');
+    const nextBtn = document.querySelector('.gallery-next');
+    const dotsContainer = document.querySelector('.gallery-dots');
+    
+    // Check if there are slides
+    if (slides.length === 0) return;
+    
+    let currentSlide = 0;
+    const slideCount = slides.length;
+    
+    // Create dots only if there are multiple slides
+    if (slideCount > 1) {
+      for (let i = 0; i < slideCount; i++) {
+        const dot = document.createElement('div');
+        dot.classList.add('gallery-dot');
+        if (i === 0) dot.classList.add('active');
+        dot.setAttribute('data-index', i);
+        dotsContainer.appendChild(dot);
+      }
+      
+      const dots = document.querySelectorAll('.gallery-dot');
+      
+      // Function to update slides
+      function updateSlide() {
+        gallerySlides.style.transform = `translateX(-${currentSlide * 100}%)`;
+        
+        // Update dots
+        dots.forEach((dot, index) => {
+          dot.classList.toggle('active', index === currentSlide);
+        });
+      }
+      
+      // Next slide
+      function nextGallerySlide() {
+        currentSlide = (currentSlide + 1) % slideCount;
+        updateSlide();
+      }
+      
+      // Previous slide
+      function prevGallerySlide() {
+        currentSlide = (currentSlide - 1 + slideCount) % slideCount;
+        updateSlide();
+      }
+      
+      // Event listeners
+      nextBtn.addEventListener('click', nextGallerySlide);
+      prevBtn.addEventListener('click', prevGallerySlide);
+  
+      // Dot click events
+dots.forEach(dot => {
+  dot.addEventListener('click', function() {
+    currentSlide = parseInt(this.getAttribute('data-index'));
+    updateSlide();
+  });
+});
+
+    // Auto slide every 4 seconds if more than one slide
+    if (slideCount > 1) {
+      setInterval(nextGallerySlide, 4000);
+    }
+  } else {
+    // Hide navigation if only one slide
+    document.querySelector('.gallery-nav').style.display = 'none';
+    dotsContainer.style.display = 'none';
+  }
+});
+</script>
+
+</body>
+</html>
