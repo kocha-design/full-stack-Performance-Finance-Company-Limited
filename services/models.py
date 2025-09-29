@@ -14,7 +14,7 @@ class Service(models.Model):
     categories =models.CharField(max_length=300, choices=SERVICE_TYPE, default='Select Category')
     description = models.TextField()
     # icon = models.ImageField(upload_to='services/', blank=True, null=True)
-    icon = models.ImageField(upload_to='services/')
+    icon = models.CharField(max_length=100, default='default-icon.png')
 
     def __str__(self):
         return self.title

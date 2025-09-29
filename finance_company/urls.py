@@ -12,7 +12,11 @@ urlpatterns = [
     path('team/', include('team.urls')),   # Team Page
     path('contact/', include('contact.urls')), # Contact Page
     path('policies/', include(('policies.urls', 'policies') , namespace= 'policies')),
-    
+       path('admin/', admin.site.urls),
+    path('', include('home.urls')), 
+       path('', include('home.urls')),  
+    path('testimonials/', include('testimonials.urls')),  
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

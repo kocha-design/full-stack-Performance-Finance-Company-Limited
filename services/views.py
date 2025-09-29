@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from .models import Service
 
-def service_main(request):
-    return render(request, 'services/service.html')
-
-def services_home(request):
-    return render(request, 'services/services_home.html')
+# def service_main(request):
+#     return render(request, 'services/service.html')
+ 
+# def services_home(request):
+#     return render(request, 'services/services_home.html')
 
 def biashara(request):
     bsn = Service.objects.filter(categories='biashara')

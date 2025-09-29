@@ -1,0 +1,38 @@
+{% load static %}
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Testimonials</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+</head> 
+<body>
+
+<section class="testimonials-section">
+  <div class="testimonials-container">
+    <h2 class="testimonials-heading">What Our Clients Say</h2>
+    <p class="testimonials-subheading">
+      Hear from our satisfied clients who have experienced our exceptional financial services.
+    </p>
+    
+    <div class="testimonials-grid">
+      {% for t in testimonials %}
+      <div class="testimonial-card">
+        {% if t.image %}
+          <img src="{{ t.image.url }}" alt="{{ t.name }}" class="testimonial-image">
+        {% else %}
+          <img src="https://placehold.co/100x100/2E7D32/FFFFFF/png?text={{ t.name|slice:":1" }}" alt="{{ t.name }}" class="testimonial-image">
+        {% endif %}
+        <p class="testimonial-quote">"{{ t.quote }}"</p>
+        <h4 class="testimonial-author">{{ t.name }}</h4>
+        <p class="testimonial-role">{{ t.role }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+
+</body>
+</html>

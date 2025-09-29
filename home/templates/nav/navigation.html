@@ -1,0 +1,31 @@
+{% load static %}
+<header>
+  <div class="logo" aria-label="Performance Finance logo">
+    <img src="{% static 'image/logo.jpg' %}" alt="Performance Finance Logo" />
+    Performance Finance
+  </div>
+ <nav>
+    <ul id="nav-menu">
+      <li><a href="{% url 'home' %}" tabindex="0">Home</a></li>
+      <li><a href="{% url 'about' %}" tabindex="0">About </a></li>
+      <li class="dropdown" tabindex="0">
+      <a href= "" tabindex="0">Services<span class="arrow">&#9654;</span></a>
+        <ul class="dropdown-menu">
+          <li><a href="{% url 'services:biashara' %}">Mkopo wa Biashara</a></li>
+          <li><a href="{% url 'services:vikundi' %}">Mkopo wa Vikundi</a></li>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+          <li><a href="{% url 'services:elimu' %}">Mkopo wa Elimu</a></li>
+          <li><a href="{% url 'services:kilimo' %}">Mkopo wa Kilimo</a></li>
+          <li><a href="{% url 'services:waajiriwa' %}">Mkopo wa Waajiriwa</a></li>
+          <li><a href="{% url 'services:nyumba' %}">Mkopo wa Maboresho ya Makazi</a></li>
+        </ul>
+      </li>
+      <li><a href="{% url 'team' %}" tabindex="0">Our Team</a></li>
+      <li><a href="{% url 'contact' %}" tabindex="0">Contact</a></li>
+    </ul>
+  </nav>
+  <div class="hamburger" aria-label="Toggle navigation menu" role="button" tabindex="0" onclick="toggleMenu()" onkeypress="if(event.key==='Enter'){toggleMenu();}">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+</header>

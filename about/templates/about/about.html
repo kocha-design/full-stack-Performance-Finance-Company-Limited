@@ -7,6 +7,7 @@
   <title>About Us - Performance Finance</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
   <style>
     * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins',sans-serif; }
     body { background:#fff; color:#222; line-height:1.6; min-height:100vh; display:flex; flex-direction:column; }
@@ -33,7 +34,7 @@
     @media (max-width:768px){ nav ul { display:none; flex-direction:column; position:absolute; top:60px; right:20px; background:rgba(46,125,50,0.95); width:180px; padding:15px 0; border-radius:10px; } nav ul.show { display:flex; } .hamburger { display:flex; } nav ul li .dropdown-menu { position:relative; top:0; left:0; box-shadow:none; border-radius:0; } }
 
     /* Hero Slideshow Styles */
-    .hero-slideshow { height:40vh; margin-top:60px; position:relative; overflow:hidden; }
+    .hero-slideshow { height:81vh; margin-top:60px; position:relative; overflow:hidden; }
     .slide { position:absolute; top:0; left:0; width:100%; height:100%; opacity:0; transition:opacity 1s ease-in-out; background-size:cover; background-position:center; }
     .slide.active { opacity:1; }
     .hero-content { position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); color:#FDD835; text-align:center; background: rgba(0,0,0,0.5); padding:30px 40px; border-radius:12px; max-width:700px; width:90%; }
@@ -90,174 +91,138 @@
     .team-social a { color: #2E7D32; font-size: 1.2rem; transition: color 0.3s; }
     .team-social a:hover { color: #FDD835; }
 
-    /* Stakeholders Styles - UPDATED WITH IMAGES */
-    .stakeholders-section { margin: 40px 0; }
-    .stakeholders-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-    .stakeholder-card { background: #E8F5E9; border-radius: 15px; overflow: hidden; box-shadow: 0 6px 15px rgba(46,125,50,0.2); transition: transform 0.3s ease; }
-    .stakeholder-card:hover { transform: translateY(-5px); }
-    .stakeholder-img { width: 100%; height: 200px; object-fit: cover; }
-    .stakeholder-info { padding: 20px; text-align: center; }
-    .stakeholder-info h3 { color: #2E7D32; margin-bottom: 10px; }
-    .stakeholder-info p { color: #444; }
 
-    /* History Timeline Styles */
-    .history-section { margin: 40px 0; }
-    .timeline { position: relative; max-width: 1000px; margin: 0 auto; }
-    .timeline::after { content: ''; position: absolute; width: 6px; background-color: #2E7D32; top: 0; bottom: 0; left: 50%; margin-left: -3px; }
-    .timeline-item { padding: 10px 40px; position: relative; width: 50%; box-sizing: border-box; }
-    .timeline-item::after { content: ''; position: absolute; width: 20px; height: 20px; background-color: white; border: 4px solid #2E7D32; border-radius: 50%; top: 15px; right: -13px; z-index: 1; }
-    .timeline-item:nth-child(even) { left: 50%; }
-    .timeline-item:nth-child(odd) { left: 0; }
-    .timeline-item:nth-child(even)::after { left: -13px; }
-    .timeline-content { padding: 20px; background-color: #E8F5E9; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-    .timeline-content h3 { color: #2E7D32; margin-bottom: 10px; }
-    .timeline-date { font-weight: bold; color: #2E7D32; margin-bottom: 5px; }
 
-     footer { 
-      background-color:#2E7D32; 
-      color:white; 
-      padding:60px 30px 20px; 
-      text-align:center; 
-      font-size:0.9rem; 
-      user-select:none; 
-    }
-    .footer-container { 
-      max-width:1100px; 
-      margin:0 auto; 
-      display:flex; 
-      flex-wrap:wrap; 
-      justify-content:space-around; 
-      gap:30px; 
-    }
-    .footer-section { 
-      flex:1 1 220px; 
-      min-width:220px; 
-      display: flex;  
-      flex-direction: column;     
-      align-items: center;        
-      text-align: center; 
-    }
-    .footer-section h3 { 
-      font-weight:700; 
-      margin-bottom:18px; 
-      font-size:1.2rem; 
-      border-bottom:2px solid #FDD835; 
-      padding-bottom:6px; 
-      user-select:text; 
-    }
-    .footer-section p, 
-    .footer-section a { 
-      color:#E8F5E9; 
-      text-decoration:none; 
-      user-select:text; 
-      font-weight:500; 
-      display:block; 
-      margin-bottom:10px; 
-      transition: color 0.3s ease; 
-    }
-    .footer-section a:hover { 
-      color:#FDD835; 
-    }
-    .social-icons { 
-      display:flex; 
-      gap:15px; 
-      justify-content:center; 
-      margin-top:12px; 
-      margin-left: auto;
-      margin-right: auto;
-       max-width: max-content;
-    }
-    .social-icons a { 
-      background:linear-gradient(135deg,#FDD835,#FFC107); 
-      color:#2E7D32; 
-      width:44px; 
-      height:44px; 
-      display:inline-flex; 
-      align-items:center; 
-      justify-content:center; 
-      border-radius:50%; 
-      font-size:1.5rem; 
-      font-weight:700; 
-      transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease; 
-      user-select:none; 
-      box-shadow:0 3px 8px rgba(253,216,53,0.6); 
-    }
-    .social-icons a:hover { 
-      background:#2E7D32; 
-      color:#FDD835; 
-      transform:scale(1.15); 
-      box-shadow:0 6px 15px rgba(46,125,50,0.7); 
-    }
-    .social-icons a svg { 
-      width: 24px; 
-      height: 24px; 
-      fill: currentColor; 
-    }
-    
-    .copyright {
-      margin-top: 40px;
-      padding-top: 20px;
-      border-top: 1px solid rgba(255,255,255,0.2);
-      color: #E8F5E9;
-    }
-    @media screen and (max-width: 768px) {
-        .timeline::after { left: 31px; }
-        .timeline-item { width: 100%; padding-left: 70px; padding-right: 25px; }
-        .timeline-item:nth-child(even) { left: 0; }
-        .timeline-item::after { left: 18px; }
-        .timeline-item:nth-child(even)::after { left: 18px; }
-    }
+
+    /* Footer Styles */
+        footer {
+            background: linear-gradient(to right, #1b5e20, #2e7d32);
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer-section h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background-color: #ff8c00;
+        }
+        
+        .footer-section p, .footer-section a {
+            margin-bottom: 15px;
+            display: block;
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: #ff8c00;
+            padding-left: 5px;
+        }
+        
+        .footer-section i {
+            width: 25px;
+            margin-right: 10px;
+            color: #ff8c00;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background-color: #ff8c00;
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            color: #ccc;
+        }
+        
+        .copyright a {
+            color: #ff8c00;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .copyright a:hover {
+            text-decoration: underline;
+        }
+        
+        .creator {
+            display: block;
+            margin-top: 10px;
+            font-style: italic;
+            color: #aaa;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+
   </style>
 </head>
 <body>
 
-<header>
-  <div class="logo" aria-label="Performance Finance logo">
-    <img src="{% static 'image/logo.jpg' %}" alt="Performance Finance Logo" />
-    Performance Finance
-  </div>
- <nav>
-    <ul id="nav-menu">
-      <li><a href="{% url 'home' %}" tabindex="0">Home</a></li>
-      <li><a href="{% url 'about' %}" tabindex="0">About </a></li>
-      <li class="dropdown" tabindex="0">
-        <a href="#" tabindex="0">Services<span class="arrow">&#9654;</span></a>
-        <ul class="dropdown-menu">
-          <li><a href="{% url 'services:biashara' %}">Mkopo wa Biashara</a></li>
-          <li><a href="{% url 'services:vikundi' %}">Mkopo wa Vikundi</a></li>
-          <li><a href="{% url 'services:elimu' %}">Mkopo wa Elimu</a></li>
-          <li><a href="{% url 'services:kilimo' %}">Mkopo wa Kilimo</a></li>
-          <li><a href="{% url 'services:waajiriwa' %}">Mkopo wa Waajiriwa</a></li>
-          <li><a href="{% url 'services:nyumba' %}">Mkopo wa Maboresho ya Makazi</a></li>
-        </ul>
-      </li>
-      <li><a href="{% url 'team' %}" tabindex="0">Our Team</a></li>
-      <li><a href="{% url 'contact' %}" tabindex="0">Contact</a></li>
-    </ul>
-  </nav>
-  <div class="hamburger" aria-label="Toggle navigation menu" role="button" tabindex="0" onclick="toggleMenu()" onkeypress="if(event.key==='Enter'){toggleMenu();}">
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
-</header>
+{% include "nav/navigation.html" %}
+
 
 <!-- Hero Section with Slideshow -->
 <!-- Hero Section with Slideshow -->
 <section class="hero-slideshow">
-  <div class="slide active" style="background-image: url('{% static "image/edited.jpg" %}');">
+  <div class="slide active" style="background-image: url('{% static "image/us.jpg" %}');">
     <div class="hero-content">
       <h1>About Performance Finance</h1>
       <p>Excellence in financial services since 2025</p>
     </div>
   </div>
-  <div class="slide" style="background-image: url('{% static "image/3.jpg" %}');">
+  <div class="slide" style="background-image: url('{% static "image/orange.jpg" %}');">
     <div class="hero-content">
       <h1>Our Commitment</h1>
       <p>Building lasting relationships with our clients</p>
     </div>
   </div>
-  <div class="slide" style="background-image: url('{% static "image/us.jpg" %}');">
+  <div class="slide" style="background-image: url('{% static "image/white.jpg" %}');">
     <div class="hero-content">
       <h1>Innovative Approach</h1>
       <p>Forward-thinking solutions for your financial needs</p>
@@ -332,47 +297,8 @@
 </section>
 
 <!-- Footer -->
-<footer>
-  <div class="footer-container">
-    <div class="footer-section" aria-label="Contact information">
-      <h3>Contact Us</h3>
-      <p><i class="fas fa-phone"></i> +255 123 456 789</p>
-      <p><i class="fas fa-envelope"></i> info@performancefinance.co.tz</p>
-      <p><i class="fas fa-map-marker-alt"></i> Plot 123, Financial Street, Dar es Salaam, Tanzania</p>
-    </div>
+{% include "footer/footer.html" %}
 
-    <div class="footer-section" aria-label="Quick links">
-      <h3>Quick Links</h3>
-      <a href="{% url 'home' %}">Home</a>
-      <a href="{% url 'about' %}">About Us</a>
-       <a href="{% url 'team' %}">Our team</a>
-      <a href="{% url 'contact' %}">Contact</a>
-    </div>
-
-    <div class="footer-section" aria-label="Follow us on social media">
-      <h3>Follow Us</h3>
-      <div class="social-icons">
-        <a href="#" aria-label="Facebook" title="Facebook" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.5 9.8v-6.9H8v-2.9h2.5V9.3c0-2.5 1.5-3.9 3.7-3.9 1.1 0 2.3.2 2.3.2v2.5h-1.2c-1.2 0-1.6.8-1.6 1.6v1.9h2.8l-.4 2.9h-2.4v6.9A10 10 0 0 0 22 12z"/></svg>
-        </a>
-        <a href="#" aria-label="Twitter" title="Twitter" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24"><path d="M22.46 6c-.77.34-1.6.57-2.46.67a4.3 4.3 0 0 0 1.88-2.37 8.48 8.48 0 0 1-2.7 1.03 4.25 4.25 0 0 0-7.23 3.87 12 12 0 0 1-8.7-4.41 4.25 4.25 0 0 0 1.32 5.67 4.23 4.23 0 0 1-1.93-.53v.05a4.25 4.25 0 0 0 3.41 4.17 4.3 4.3 0 0 1-1.92.07 4.25 4.25 0 0 0 3.96 2.95 8.5 8.5 0 0 1-5.26 1.82A12 12 0 0 0 12 21c7.82 0 12.1-6.48 12.1-12.1 0-.18 0-.36-.01-.54A8.6 8.6 0 0 0 22.46 6z"/></svg>
-        </a>
-        <a href="#" aria-label="Instagram" title="Instagram" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 2A3.75 3.75 0 0 0 4 7.75v8.5A3.75 3.75 0 0 0 7.75 20h8.5a3.75 3.75 0 0 0 3.75-3.75v-8.5A3.75 3.75 0 0 0 16.25 4h-8.5zM12 7a5 5 0 1 1 0 10a5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6a3 3 0 0 0 0-6zm4.75-3a1.25 1.25 0 1 1-2.5 0a1.25 1.25 0 0 1 2.5 0z"/></svg>
-        </a>
-        <a href="#" aria-label="LinkedIn" title="LinkedIn" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5a2.5 2.5 0 0 1 0-5zm.02 4.97H2V21h3v-12.53zM9 8.97h2.88v1.65h.04a3.17 3.17 0 0 1 2.84-1.56c3.04 0 3.6 2 3.6 4.59V21h-3v-6.41c0-1.53-.03-3.5-2.14-3.5-2.15 0-2.48 1.67-2.48 3.4V21H9v-12.03z"/></svg>
-        </a>
-      </div>
-    </div>
-  </div>
-
-   <div class="copyright">
-    <p>&copy;  2025 Performance Finance. All Rights Reserved.|
-     <a href="{% url 'policies:policies' %}">Privacy Policy & Terms Used</a></p>
-  </div>
-</footer>
 <script>
   function toggleMenu() {
     const navUl = document.querySelector('nav ul');

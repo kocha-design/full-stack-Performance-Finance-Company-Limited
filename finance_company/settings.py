@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'services',
     'ckeditor',
     'policies',
+    'testimonials'
 ]
 
 MIDDLEWARE = [
